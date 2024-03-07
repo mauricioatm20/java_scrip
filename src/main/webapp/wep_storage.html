@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>WebStorage</title>
+<style>
+    body {
+        font-family:  Arial, Helvetica, sans-serif;
+
+    }
+    #div_ingreso{
+        text-align: center;
+    }
+    table{
+        margin: 40px auto;
+        width: 400px;
+    }
+    td{
+        border: 1px solid ;
+        padding: 3px 7px;
+    }
+
+    #btn_agrega :disabled{
+        background-color: darkgrey;
+    }
+ 
+</style>
+<script>
+var inputNom;
+var inputApe;
+
+
+function Persona(nombre , apellido){
+    this.nombre = nombre;
+    this.apellido = apellido;
+}
+
+function agrega() {
+
+    var nuevo = new Persona(inputNom.value , inputApe.value);
+    inputNom.value = "";
+    inputApe.value = "";
+
+    boton.disabled = true;
+    agregarEnTabla(nuevo);
+    grabaWebStorage(nuevo);  
+}   
+
+function agregarEnTabla(persona) {
+    var tr = document.createElement ("tr");
+
+    var tdNom = document.createElement ("td");
+    var tdApe = document.createElement  ("td");
+    tdNom.textContent = persona.nombre
+    tdApe.textContent = persona.apellido
+    
+    tr.appendChild(tdNom);
+    tr.appendChild(tdApe );
+
+    document.querySelector('#tabla_datos tbody').appendChild(tr);
+    
+}
+
+function grabaWebStorage(nuevaPersona){
+    if (!localStorage){
+        alert("su navegagor no soporta localStorage");
+        return;
+    }
+    var lista = new Array();
+    //preguntar si tenemos almacenado un array
+    if (localStorage.getItem("personas")){
+        lista=JSON.parse( localStorage.getItem("personas"));
+    }
+    lista[lista.length] = nuevaPersona;
+    localStorage.setItem("personas", JSON.stringify(lista));
+}
+
+function cargaWebStorage(){
+    if (!localStorage){
+        alert("su navegor no carga localStorage");
+        return
+    }
+}
+var lista;
+if (localStorage.getItem("personas")){
+    lista = JSON.parse(localStorage.getItem("personas"));
+    for (var i=0; i<lista.length; i++)
+    agregarEnTabla(lista[i]);
+}
+
+function  edita(){
+    if (inputNom.value != "" && inputApe.value != ""){
+        boton.disabled = false; 
+    }else{
+        boton.disabled = true;
+    }
+}
+
+var boton;
+
+window.onload = function () {
+    boton = document.querySelector('#btn_agrega');
+    boton.addEventListener('click', agrega);
+    boton.disabled = true;
+
+    inputNom = document.querySelector('#nom');
+    inputApe = document.querySelector('#ape');
+    inputNom.addEventListener('change', edita);
+    inputApe.addEventListener('change', edita);
+    cargaWebStorage();
+};
+
+</script>
+</head>
+<body>
+    <div id="div_ingreso">
+	    <h1> Carga de datos</h1>
+        <label for= "nom">Nombre</label>
+        <input id="nom" />
+        
+        <label for="ape">apellidos</label>
+        <input id="ape" required/>
+        
+        <button id="btn_agrega">agrega</button>
+
+
+    </div>
+    <table id="tabla_datos">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+            </tr>
+        </thead>
+        <tbody>
+<!--             <tr> -->
+<!--                 <td>Juan</td>  -->
+<!--                 <td>Perez</td> -->
+<!--             </tr> -->
+        </tbody>
+
+    </table>   
+</body>
+</html>

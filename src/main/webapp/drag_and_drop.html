@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insert title here</title>
+<style>
+img{
+  width: 100px;
+}
+.destino{
+  background-color: lightcyan;
+  width: 150px;
+  height: 430px;
+  float: left;
+  margin: 20px;
+}
+.movil{
+  width: 100px;
+  margin: 25px auto;
+}
+
+</style>
+
+<script>
+
+function start() {
+	alert('arrastra');
+    }
+    window.onload = function() {
+        var moviles = document.querySelectorall(".movil");
+        for (var i = 0; i < moviles.length; i++)
+        moviles[i].addEventListener("dragstart",start);
+
+        var destino = document.querySelectorall(".destino");
+        for (var i = 0; i < destino.length; i++)
+        destino[i].addEventListener("dragover ", over);
+        destino[i].addEventListener("drop" , drop);
+
+        
+    }
+</script>
+
+</head>
+<body>
+<h1>Drag & Drop</h1>
+<div class="destino">
+    <div id="movil1" class="movil">
+        <img src="images/boladelmundo1.png"/>
+    </div>
+    <div id="movil2" class="movil">
+        <img src="images/boladelmundo2.png"/>
+    </div>
+    <div id="movil3" class="movil">
+        <img src="images/boladelmundo3.png"/>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+img{
+  width: 100px;
+}
+.destino{
+  background-color: lightcyan;
+  width: 150px;
+  height: 430px;
+  float: left;
+  margin: 20px;
+}
+.movil{
+  width: 100px;
+  margin: 25px auto;
+}
